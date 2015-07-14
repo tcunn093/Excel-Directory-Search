@@ -49,10 +49,15 @@ End Sub
 Function isFile(s As String)
 'file is true
 'folder is false
-
+On Error GoTo Errhandler:
 If InStr(s, ".") = 0 And (GetAttr(s) = 16 Or GetAttr(s) = 17) Then
     isFile = False
 Else: isFile = True
+
+Exit Sub
+
+Errhandler:
+isFile = False
 
 End If
 
