@@ -16,26 +16,69 @@ End Sub
 Sub IterateThroughFolder(folder As String)
 Dim i As Integer
 
-varDirectory = Dir(folder, vbDirectory)
+Dim FSO As Object
+Dim file As Object
 
-While varDirectory <> ""
+Set FSO = CreateObject("Scripting.FileSystemObject")
+'Debug.Print folder
+With FSO
+    If .FolderExists(folder) Then
+        For Each file In .GetFolder(folder).subFolders
+            
+            Set f = New FileData
 
-    If InStrRev(folder + varDirectory, ".") <> Len(folder + varDirectory) Then
-    
-        Set f = New FileData
+            With f
+                f.Name = file.Name
+                f.Address = file.Path
+            End With
 
-        With f
-            f.Name = varDirectory
-            f.Address = folder + varDirectory
-        End With
+            FilesAndFolders.Add f
+            'Debug.Print FilesAndFolders.Count
+            
+            fileCount = fileCount + 1
+            
+        Next file
+        
+        For Each file In .GetFolder(folder).Files
+            
+            Set f = New FileData
 
-        FilesAndFolders.Add f
-        fileCount = fileCount + 1
+            With f
+                f.Name = file.Name
+                f.Address = file.Path
+            End With
+
+            FilesAndFolders.Add f
+            
+            fileCount = fileCount + 1
+            
+        Next file
     End If
-    
-    varDirectory = Dir
+End With
 
-Wend
+'Debug.Print folder
+'varDirectory = Dir(folder, vbDirectory)
+'
+'While varDirectory <> ""
+'
+'    If InStrRev(folder + varDirectory, ".") <> Len(folder + varDirectory) Then
+'
+'        Set f = New FileData
+'
+'        With f
+'            f.Name = varDirectory
+'            f.Address = folder + varDirectory
+'        End With
+'
+'        FilesAndFolders.Add f
+'        fileCount = fileCount + 1
+'    End If
+'
+'    varDirectory = Dir
+'
+'Wend
+
+
 
 End Sub
 
@@ -46,18 +89,19 @@ Call Sheet1.main
 End Sub
 
 
-Function isFile(s As String)
+Function isFile(s As String) As Boolean
 'file is true
 'folder is false
-On Error GoTo Errhandler:
-If InStr(s, ".") = 0 And (GetAttr(s) = 16 Or GetAttr(s) = 17) Then
-    isFile = False
+
+
+If InStr(s, ".") = 0 Then
+    If FileLen(s) > 2000 Then
+
+        If (GetAttr(s) = 16 Or GetAttr(s) = 17) Then
+            isFile = False
+        End If
+    End If
 Else: isFile = True
-
-Exit Function
-
-Errhandler:
-isFile = False
 
 End If
 

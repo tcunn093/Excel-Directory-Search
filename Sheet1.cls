@@ -71,7 +71,6 @@ With .Offset(1, 0)
 .Interior.Color = RGB(100, 100, 100)
 .Borders.LineStyle = xlNone
 
-
 End With
 
 .Interior.Color = RGB(153, 153, 153)
@@ -143,23 +142,21 @@ End Sub
 Sub main()
 
 Dim counter As Long: counter = 1
-fileCount = 0
-rootDir = Application.ActiveWorkbook.Path + "\"
 
+rootDir = Application.ActiveWorkbook.Path + "\"
 
 Call clearRange(baseRow, lastRow(baseCol), baseCol, lastColumn(baseRow))
 
 Set FilesAndFolders = New Collection
 
 Call IterateThroughFolder(rootDir)
+Range(fileCountRange).Value = FilesAndFolder.Count
 
 While counter < FilesAndFolders.Count
 
-    If isFile(FilesAndFolders.Item(counter).Address) = False Then
-        Call IterateThroughFolder(FilesAndFolders.Item(counter).Address + "\")
-        Range(fileCountRange).Value = fileCount
-    End If
-    
+    Call IterateThroughFolder(FilesAndFolders.Item(counter).Address)
+    Range(fileCountRange).Value = FilesAndFolder.Count
+
     counter = counter + 1
 
 Wend
