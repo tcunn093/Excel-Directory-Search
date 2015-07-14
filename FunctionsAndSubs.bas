@@ -54,7 +54,7 @@ If InStr(s, ".") = 0 And (GetAttr(s) = 16 Or GetAttr(s) = 17) Then
     isFile = False
 Else: isFile = True
 
-Exit Sub
+Exit Function
 
 Errhandler:
 isFile = False
