@@ -20,7 +20,7 @@ Dim FSO As Object
 Dim file As Object
 
 Set FSO = CreateObject("Scripting.FileSystemObject")
-'Debug.Print folder
+
 With FSO
     If .FolderExists(folder) Then
         For Each file In .GetFolder(folder).subFolders
@@ -33,8 +33,6 @@ With FSO
             End With
 
             FilesAndFolders.Add f
-            'Debug.Print FilesAndFolders.Count
-            
             fileCount = fileCount + 1
             
         Next file
@@ -56,30 +54,6 @@ With FSO
     End If
 End With
 
-'Debug.Print folder
-'varDirectory = Dir(folder, vbDirectory)
-'
-'While varDirectory <> ""
-'
-'    If InStrRev(folder + varDirectory, ".") <> Len(folder + varDirectory) Then
-'
-'        Set f = New FileData
-'
-'        With f
-'            f.Name = varDirectory
-'            f.Address = folder + varDirectory
-'        End With
-'
-'        FilesAndFolders.Add f
-'        fileCount = fileCount + 1
-'    End If
-'
-'    varDirectory = Dir
-'
-'Wend
-
-
-
 End Sub
 
 Sub Auto_Open()
@@ -88,24 +62,6 @@ Call Sheet1.main
 
 End Sub
 
-
-Function isFile(s As String) As Boolean
-'file is true
-'folder is false
-
-
-If InStr(s, ".") = 0 Then
-    If FileLen(s) > 2000 Then
-
-        If (GetAttr(s) = 16 Or GetAttr(s) = 17) Then
-            isFile = False
-        End If
-    End If
-Else: isFile = True
-
-End If
-
-End Function
 
 
 Sub pasteArray(ByVal row As Long, ByVal col As Long, a() As Variant)

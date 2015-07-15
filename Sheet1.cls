@@ -150,7 +150,7 @@ Call clearRange(baseRow, lastRow(baseCol), baseCol, lastColumn(baseRow))
 Set FilesAndFolders = New Collection
 
 Call IterateThroughFolder(rootDir)
-Range(fileCountRange).Value = FilesAndFolder.Count
+Range(fileCountRange).Value = FilesAndFolders.Count
 
 While counter < FilesAndFolders.Count
 
