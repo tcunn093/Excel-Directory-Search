@@ -33,7 +33,6 @@ With FSO
             End With
 
             FilesAndFolders.Add f
-            fileCount = fileCount + 1
             
         Next file
         
@@ -48,8 +47,6 @@ With FSO
 
             FilesAndFolders.Add f
             
-            fileCount = fileCount + 1
-            
         Next file
     End If
 End With
@@ -61,8 +58,6 @@ Sub Auto_Open()
 Call Sheet1.main
 
 End Sub
-
-
 
 Sub pasteArray(ByVal row As Long, ByVal col As Long, a() As Variant)
 
